@@ -20,12 +20,10 @@
 
         php artisan migrate
 
-6.  To setup api url in other vendor integration cek in .env and update the url value
-
-7.  Generate your application encryption key:
+6.  Generate your application encryption key:
 
         php artisan key:generate
 
-8.  Start the localhost server:
+7.  Start the localhost server:
 
         php artisan serve
