@@ -54,7 +54,7 @@ class User extends Authenticatable
     public function getAgeAttribute()
     {
         if ($this->date_of_birth) {
-            return Carbon::parse($this->date_of_birth)->format('Y') - Carbon::now()->format('Y');
+            return Carbon::now()->format('Y') - Carbon::parse($this->date_of_birth)->format('Y');
         }
 
         return null;
