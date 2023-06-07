@@ -89,7 +89,8 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'token' => $user->createToken("API TOKEN")->plainTextToken,
+                'user' => $user
             ], 200);
 
         } catch (\Throwable $th) {
@@ -98,6 +99,43 @@ class AuthController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $validateUser = Validator::make($request->all(), 
+        [
+            'weight' => 'required',
+            'height' => 'required',
+            'gender' => 'required',
+            'date_of_birth' => 'required',
+        ]);
+
+        if($validateUser->fails()){
+            return response()->json([
+                'status' => false,
+                'message' => 'validation error',
+                'errors' => $validateUser->errors()
+            ], 401);
+        }
+
+        $user = User::find(Auth::user()->id);
+        
+        $user->update([
+            'weight' => $request->weight,
+            'height' => $request->height,
+            'gender' => $request->gender,
+            'date_of_birth' => $request->date_of_birth,
+        ]);
+
+        
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Update Successfully',
+            'user' => $user
+        ], 200);
+
     }
 
     public function logoutUser()

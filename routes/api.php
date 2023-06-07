@@ -19,6 +19,8 @@ Route::middleware('auth:sanctum')->get('/auth/user', function (Request $request)
     return $request->user();
 });
 
+Route::middleware('auth:sanctum')->post('/auth/user/update', [AuthController::class, 'updateProfile']);
+
 Route::post('/auth/register', [AuthController::class, 'createUser']);
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
 Route::post('/auth/logout', [AuthController::class, 'logoutUser'])->middleware('auth:sanctum');
