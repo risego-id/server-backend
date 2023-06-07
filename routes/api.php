@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\RecommendationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/auth/user', function (Request $request)
 });
 
 Route::middleware('auth:sanctum')->post('/auth/user/update', [AuthController::class, 'updateProfile']);
+Route::middleware('auth:sanctum')->post('/recommendation/food', [RecommendationController::class, 'foodRecommendation']);
 
 Route::post('/auth/register', [AuthController::class, 'createUser']);
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
