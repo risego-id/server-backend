@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\RecommendationController;
+use App\Http\Controllers\Api\V1\GoalController;
+use App\Http\Controllers\Api\V1\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +22,16 @@ Route::middleware('auth:sanctum')->get('/auth/user', function (Request $request)
     return $request->user();
 });
 
-Route::middleware('auth:sanctum')->post('/auth/user/update', [AuthController::class, 'updateProfile']);
-Route::middleware('auth:sanctum')->post('/recommendation/food', [RecommendationController::class, 'foodRecommendation']);
-
 Route::post('/auth/register', [AuthController::class, 'createUser']);
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
 Route::post('/auth/logout', [AuthController::class, 'logoutUser'])->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/auth/user/update', [AuthController::class, 'updateProfile']);
+    Route::post('/recommendation/food', [RecommendationController::class, 'foodRecommendation']);
+
+
+    Route::apiResource('goal', GoalController::class);
+    Route::apiResource('task', TaskController::class);
+});
+
